@@ -1,0 +1,7 @@
+ssh-keygen -t rsa -b 4096 -C "lsgonsilva@gmail.com"
+
+criando chave para GitHub
+
+cat ~/.ssh/id_rsa.pub
+
+Mostra a chave
