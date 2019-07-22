@@ -5,29 +5,84 @@ use Sisfin\Util;
 $sqlCategoria = 'SELECT * FROM tb_categoria_financeira';
 $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
 ?>
-<script type="text/javascript" src="js/jquery.maskMoney.js"></script>
-<script type="text/javascript" src="js/util.js"></script>
+
 <script>
 
     function salvarNovaReceita() {
+        //validaForm();
+        var dados = $('#formReceita').serialize();
         $.ajax({
-            url: "ajax/ajax_receita.php",
+            url: "ajax/ajax_receita.php?acao=novaReceita",
             type: 'post',
-            data: {
-                nome: "Maria Fernanda",
-                salario: '3500'
+            data: dados,
+            success: function (resposta) {
+                console.log(resposta);
+                $('#dados').html('<p>' + resposta + '</p>');
             },
-            beforeSend: function () {
-                $("#resultado").html("ENVIANDO...");
+            error: function (xhr, er) {
+                $('#mensagem_erro').html('<p class="destaque">Error ' + xhr.status + ' - ' + xhr.statusText + '<br />Tipo de erro: ' + er + '</p>')
             }
-        })
-                .done(function (msg) {
-                    $("#resultado").html(msg);
-                })
-                .fail(function (jqXHR, textStatus, msg) {
-                    alert(msg);
-                });
+        });
     }
+
+//    function validaForm() {
+//        $("#formReceita").click(function () {
+//            event.preventDefault();
+//            var dados = $(this).serialize();
+//            var campos = $(this).find('.required');
+//
+//            $(campos).each(function () {
+//                for (i = 0; i = $(this).val() == ''; i++) {
+//                    if ($(this).val() == '') {
+//                        alert("Preencha os campos obrigatórios");
+//                        $(this).focus();
+//                        e.preventDefault();
+//                    } else {
+//                        $.ajax({
+//                            type: "POST",
+//                            url: "cadastrar.php",
+//                            data: dados,
+//                            success: function (data)
+//                            {
+//                                $("#status").slideDown();
+//                                $("#status").html(data);
+//                            }
+//                        });
+//                        $('#contact-form').trigger("reset");
+//
+//                    }
+//                }
+//            });
+//        });
+//    }
+//    function validaForm() {
+//        $('#txtDescricao').removeClass('is-invalid');
+//        $('#txtRecebidoDe').removeClass('is-invalid');
+//        $('#txtValor').removeClass('is-invalid');
+//        $('#cmbCategoria').removeClass('is-invalid');
+//        $('#cmbSituacao').removeClass('is-invalid');
+//        if ($('#txtDescricao').val() === '') {
+//            $('#txtDescricao').addClass('is-invalid');
+//            return false;
+//        }
+//        if ($('#txtRecebidoDe').val() === '') {
+//            $('#txtRecebidoDe').addClass('is-invalid');
+//            return false;
+//        }
+//        if ($('#txtValor').val() === '') {
+//            $('#txtValor').addClass('is-invalid');
+//            return false;
+//        }
+//        if ($('#cmbCategoria').val() === '') {
+//            $('#cmbCategoria').addClass('is-invalid');
+//            return false;
+//        }
+//        if ($('#cmbSituacao').val() === '') {
+//            $('#cmbSituacao').addClass('is-invalid');
+//            return false;
+//        }
+//        return false;
+//    }
 
 </script>
 <div class="row">
@@ -38,30 +93,30 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         <a href="?pg=receitas" class="btn btn-outline-primary btn-sm float-right" role="button" aria-disabled="true">Todas as Receitas</a>
     </div>
 </div>
-<form method="post">
+<form method="post" id="formReceita">
     <div class="row">
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label for="txtDescricao">Descrição</label>
-                <input type="text" name="txtDescricao" class="form-control" id="txtDescricao" placeholder="Descrição da Receita">
+                <input type="text" name="txtDescricao" class="form-control required" id="txtDescricao" placeholder="Descrição da Receita" onkeyup="validaForm();">
             </div>
         </div>
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label for="txtRecebidoDe">Recebido de</label>
-                <input type="text" name="txtRecebidoDe" class="form-control" id="txtRecebidoDe" placeholder="Recebido de">
+                <input type="text" name="txtRecebidoDe" class="form-control required" id="txtRecebidoDe" placeholder="Recebido de" onkeyup="validaForm();">
             </div>
         </div>
         <div class="form-group col-md-4">
             <label for="txtValor">Valor (R$)</label>
-            <input type="text" name="txtValor" class="form-control money" id="txtValor" placeholder="R$ 0,00" maxlength="11">
+            <input type="text" name="txtValor" class="form-control money required" id="txtValor" placeholder="R$ 0,00" maxlength="11" onkeyup="validaForm();">
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-4">
             <label for="cmbCategoria">Categoria</label>
-            <select id="cmbCategoria" name="cmbCategoria" class="form-control">
-                <option selected>Selecione</option>
+            <select id="cmbCategoria" name="cmbCategoria" class="form-control required" onclick="validaForm();">
+                <option value="" selected>Selecione</option>
                 <?php
                 $query = $db->query($sqlCategoria);
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -77,8 +132,8 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         </div>
         <div class="form-group col-md-4">
             <label for="cmbSituacao">Situação</label>
-            <select id="cmbSituacao" name="cmbSituacao" class="form-control">
-                <option selected>Selecione</option>
+            <select id="cmbSituacao" name="cmbSituacao" class="form-control required" onclick="validaForm();">
+                <option value="" selected>Selecione</option>
                 <?php
                 $query = $db->query($sqlSituacao);
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -97,65 +152,7 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
             <input type="text" disabled="" name="txtData" class="form-control" id="txtData" value="<?= Util::FormataBancoData(date("Y-m-d")); ?>">
         </div>
     </div>
-    <button type="submit" class="btn btn-outline-primary">Salvar</button>
+    <button type="button" class="btn btn-outline-primary" onclick="salvarNovaReceita();">Salvar</button>
     <button type="reset" class="btn btn-outline-secondary">Limpar</button>
 </form>
-<?php if (($_SERVER['REQUEST_METHOD'] == 'POST')) { ?>
-    <script>
-        $('#hdnID').val([<?= $_POST['hdnID'] ?>]);
-        $('#txtDescricao').val("<?= $_POST['txtDescricao'] ?>");
-        $('#txtRecebidoDe').val("<?= $_POST['txtRecebidoDe'] ?>");
-        $('#txtValor').val("<?= $_POST['txtValor'] ?>");
-        $('#cmbCategoria').val("<?= $_POST['cmbCategoria'] ?>");
-        $('#cmbSituacao').val("<?= $_POST['cmbSituacao'] ?>");
-        $('#txtData').val("<?= $_POST['txtData'] ?>");
-    </script>
-    <?php
-    try {
-        //Salva no banco
-        Util::converteMoedaBanco($_POST['txtValor']);
-        $created = Util::FormataDataBanco($_POST['txtData']);
-        var_dump($_POST);
-        die;
-        if (empty($_POST['hdnID'])) {
-            $sql = "INSERT INTO tb_receita(
-                                    descricao,
-                                    recebido_de,
-                                    valor,
-                                    id_categoria,
-                                    id_situacao,
-                                    created)
-                                  VALUES ('{$_POST['txtDescricao']}',
-                                    '{$_POST['txtRecebidoDe']}',
-                                    '{$_POST['txtValor']}',
-                                    '{$_POST['cmbCategoria']}',
-                                     {$_POST['cmbSituacao']},
-                                    '{$created}')";
-        } else {
-            $acao = $_GET['acao'];
-            $sql = "UPDATE user SET
-                                        nome =  '{$_POST['txtNome']}',
-                                        cpf =  '{$cpf}',
-                                        email =  '{$_POST['txtEmail']}',
-                                        id_perfil = {$_POST['cmbPerfil']}
-                                        WHERE id = {$_POST['hdnID']}";
-        }
-        $execute = $db->prepare($sql);
-        if (isset($_GET['acao']) && $_GET['acao'] == 'editar') {
-            if ($execute->execute()) {
-                echo '<br/><div class="alert alert-success" role="alert"><b>Usuário atualizado com sucesso!</b><br/><script>window.location="?pg=c_list_usuario";</script></div>';
-            } else {
-                throw new Exception("Não foi possivel cadastrar o arquivo importado.");
-            }
-        } else {
-            if ($execute->execute()) {
-                echo '<br/><div class="alert alert-success" role="alert"><b>Usuário cadastrado com sucesso!</b><br/><script>window.location="?pg=c_list_usuario";</script></div>';
-            } else {
-                throw new Exception("Não foi possivel cadastrar o arquivo importado.");
-            }
-        }
-    } catch (Exception $e) {
-        echo '<div class="alert alert-danger" role="alert"><b>Não foi possivel salvar os registros.<br/>Detalhes: ' . $e->getMessage() . '</b></div>';
-    }
-}
-?>
+<div id="dados"></div>

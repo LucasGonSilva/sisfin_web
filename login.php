@@ -29,6 +29,7 @@
                         password: password
                     },
                     success: function (resposta) {
+                        console.log(resposta);
                         switch (resposta) {
                             case 'campos_vazios':
                                 $('.msg').html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' +

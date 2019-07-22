@@ -23,11 +23,10 @@ use Sisfin\Util;
         <title>Sistema de Finanças Web</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
-        <link rel="stylesheet" type="text/css" href="css/datatables.min.css"/>
         <script defer src="css/fontawesome/js/all.js"></script> <!--load all styles -->
         <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-        <script type="text/javascript" src="js/datatables.min.js"></script>
-        <script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/jquery.maskMoney.js"></script>
+        <script type="text/javascript" src="js/util.js"></script>
         <script>
             $(document).ready(function () {
                 pluginDataTable();
@@ -73,14 +72,13 @@ use Sisfin\Util;
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="?pg=home">Inicio <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <a class="dropdown-item" href="?pg=tarefas">Tarefas</a>
                             <a class="dropdown-item" href="?pg=projetos">Projetos</a>
@@ -95,8 +93,8 @@ use Sisfin\Util;
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Controle Financeiro</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Controle Financeiro</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown02">
                             <a class="dropdown-item" href="?pg=receitas">Receitas</a>
                             <a class="dropdown-item" href="?pg=despesas_fixas">Despesas Fixas</a>
                             <a class="dropdown-item" href="?pg=despesas_variaveis">Despesas Variáveis</a>
@@ -105,8 +103,8 @@ use Sisfin\Util;
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown03">
                             <a class="dropdown-item" href="?pg=financeiro">Financeiro</a>
                             <a class="dropdown-item" href="?pg=metas">Metas</a>
                             <a class="dropdown-item" href="?pg=gastos">Gastos</a>
@@ -114,8 +112,8 @@ use Sisfin\Util;
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gráficos</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gráficos</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="?pg=grafico_mensal_gastos">Mensal de Gastos</a>
                             <a class="dropdown-item" href="?pg=metas">Metas</a>
                             <a class="dropdown-item" href="?pg=gastos">Gastos</a>
@@ -123,8 +121,8 @@ use Sisfin\Util;
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown05">
                             <a class="dropdown-item" href="?pg=home">Perfil</a>
                             <a class="dropdown-item" href="?pg=home">Another action</a>
                             <a class="dropdown-item" href="config/logout.php">Sair</a>
@@ -134,22 +132,20 @@ use Sisfin\Util;
             </div>
         </nav>
         <div class="container">
-            <main role="main" class="container">
-                <?php
+            <?php
 
-                function getGet($key) {
-                    return isset($_GET[$key]) ? $_GET[$key] : 'home';
-                }
+            function getGet($key) {
+                return isset($_GET[$key]) ? $_GET[$key] : 'home';
+            }
 
-                $pag = getGet('pg');
-                if (is_file($pag . '.php'))
-                    include $pag . '.php';
-                else
-                    include 'error.php';
-                ?>
+            $pag = getGet('pg');
+            if (is_file($pag . '.php'))
+                include $pag . '.php';
+            else
+                include 'error.php';
+            ?>
 
 
-            </main><!-- /.container -->
         </div>
         <script>
             window.jQuery || document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>')
