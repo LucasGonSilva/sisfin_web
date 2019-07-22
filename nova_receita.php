@@ -7,7 +7,9 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
 ?>
 
 <script>
-
+    function goBack() {
+        window.history.back();
+    }
     function salvarNovaReceita() {
         //validaForm();
         var dados = $('#formReceita').serialize();
@@ -149,10 +151,12 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         </div>
         <div class="form-group col-md-4">
             <label for="txtData">Data</label>
-            <input type="text" disabled="" name="txtData" class="form-control" id="txtData" value="<?= Util::FormataBancoData(date("Y-m-d")); ?>">
+            <input type="text" name="txtData" class="form-control" readonly="" id="txtData" value="<?= Util::FormataBancoData(date("Y-m-d")); ?>">
         </div>
     </div>
+    <hr>
     <button type="button" class="btn btn-outline-primary" onclick="salvarNovaReceita();">Salvar</button>
     <button type="reset" class="btn btn-outline-secondary">Limpar</button>
+    <input type='button' class="btn btn-outline-warning" value='Voltar' onclick='history.go(-1)' />
 </form>
 <div id="dados"></div>

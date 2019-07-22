@@ -9,13 +9,13 @@ use Sisfin\Util;
 
 switch ($_GET['acao']) {
     case 'novaReceita':
-        var_dump($_POST);die;
+//        var_dump($_POST);die;
         try {
             //Salva no banco
             Util::converteMoedaBanco($_POST['txtValor']);
             $created = Util::FormataDataBanco($_POST['txtData']);
-            var_dump($_POST);
-            die;
+//            var_dump($created);
+//            die;
             if (empty($_POST['hdnID'])) {
                 $sql = "INSERT INTO tb_receita(
                                     descricao,
@@ -27,9 +27,10 @@ switch ($_GET['acao']) {
                                   VALUES ('{$_POST['txtDescricao']}',
                                     '{$_POST['txtRecebidoDe']}',
                                     '{$_POST['txtValor']}',
-                                    '{$_POST['cmbCategoria']}',
+                                    {$_POST['cmbCategoria']},
                                      {$_POST['cmbSituacao']},
                                     '{$created}')";
+                                    echo $sql;
             } else {
                 $acao = $_GET['acao'];
                 $sql = "UPDATE user SET
@@ -48,7 +49,7 @@ switch ($_GET['acao']) {
                 }
             } else {
                 if ($execute->execute()) {
-                    echo '<br/><div class="alert alert-success" role="alert"><b>Usuário cadastrado com sucesso!</b><br/><script>window.location="?pg=c_list_usuario";</script></div>';
+                    echo '<br/><div class="alert alert-success" role="alert"><b>Receita cadastrada com sucesso!</b><br/><script>window.location="?pg=receitas";</script></div>';
                 } else {
                     throw new Exception("Não foi possivel cadastrar o arquivo importado.");
                 }

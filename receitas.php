@@ -1,14 +1,14 @@
 <?php
-//$sql = "SELECT u.*, p.descricao perfil, s.descricao status FROM sisfin_web.tb_usuario u
-//        INNER JOIN sisfin_web.tb_perfil p
-//        ON p.id = u.id_perfil
-//        INNER JOIN sisfin_web.tb_status s
-//        ON s.id = u.id_status";
-//$query = $db->prepare($sql);
-//$query->execute();
-//$receita = $query->fetchAll(PDO::FETCH_ASSOC);
-//
-//use Sisfin\Util;
+$sql = "SELECT r.*, cf.descricao categoria, sf.descricao situacao FROM sisfin_web.tb_receita r
+        INNER JOIN sisfin_web.tb_categoria_financeira cf
+        ON cf.id = r.id_categoria
+        INNER JOIN sisfin_web.tb_situacao_financeira sf
+        ON sf.id = r.id_situacao";
+$query = $db->prepare($sql);
+$query->execute();
+$receita = $query->fetchAll(PDO::FETCH_ASSOC);
+
+use Sisfin\Util;
 ?>
 <div class="row">
     <div class="col-md-6 align-middle">
@@ -35,24 +35,15 @@
         <tbody>
             <?php
             $ordem = 1;
-            foreach ($users as $value) {
-                if ($value['id_status'] == '1') {
-                    $text = 'success';
-                    $descricao = 'ativo';
-                    $icon = 'thumbs-up';
-                } else {
-                    $text = 'danger';
-                    $descricao = 'inativo';
-                    $icon = 'thumbs-down';
-                }
+            foreach ($receita as $value) {
                 ?>
                 <tr>
                     <td><?= $ordem ?></td>
-                    <td><?= $value['nome'] ?></td>
-                    <td><?= $value['email'] ?></td>
-                    <td><?= Util::formatarMascara("cpf", $value['cpf']) ?></td>
-                    <td><?= $value['perfil'] ?></td>
-                    <td><?= $value['status'] ?></td>
+                    <td><?= $value['descricao'] ?></td>
+                    <td><?= $value['recebido_de'] ?></td>
+                    <td><?= number_format($value['valor'], 2, ',', '.') ?></td>
+                    <td><?= $value['categoria'] ?></td>
+                    <td><?= $value['situacao'] ?></td>
                     <td><?= Util::FormataBancoData($value['created']) ?></td>
                     <td>
                         <a href="#" class="text-primary" title="Editar usuário"><i class="fa fa-user-edit"></i></a>

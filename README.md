@@ -12,3 +12,5 @@ criando chave para GitHub
 cat ~/.ssh/id_rsa.pub
 
 Mostra a chave
+
+https://www.w3schools.com/howto/
