@@ -1,5 +1,13 @@
+<div class="row">
+    <div class="col-md-6 align-middle">
+        <h1 class="align-middle">Lista de Despesas</h1>
+    </div>
+    <div class="col-md-6">
+        <a href="?pg=nova_despesa" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Nova Despesa</a>
+    </div>
+</div>
 <?php
-$sql = "SELECT r.*, cf.descricao categoria, sf.descricao situacao FROM sisfin_web.tb_receita r
+$sql = "SELECT r.*, cf.descricao categoria, sf.descricao situacao FROM sisfin_web.tb_despesa r
         INNER JOIN sisfin_web.tb_categoria_financeira cf
         ON cf.id = r.id_categoria
         INNER JOIN sisfin_web.tb_situacao_financeira sf
@@ -7,18 +15,10 @@ $sql = "SELECT r.*, cf.descricao categoria, sf.descricao situacao FROM sisfin_we
         ORDER BY valor DESC";
 $query = $db->prepare($sql);
 $query->execute();
-$receita = $query->fetchAll(PDO::FETCH_ASSOC);
+$despesa = $query->fetchAll(PDO::FETCH_ASSOC);
 
 use Sisfin\Util;
 ?>
-<div class="row">
-    <div class="col-md-6 align-middle">
-        <h1 class="align-middle">Lista de Receitas</h1>
-    </div>
-    <div class="col-md-6">
-        <a href="?pg=nova_receita" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Nova Receita</a>
-    </div>
-</div>
 <div class="row">
     <table class="table">
         <thead>
@@ -36,7 +36,7 @@ use Sisfin\Util;
         <tbody>
             <?php
             $ordem = 1;
-            foreach ($receita as $value) {
+            foreach ($despesa as $value) {
                 ?>
                 <tr>
                     <td><?= $ordem ?></td>

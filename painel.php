@@ -96,7 +96,7 @@ use Sisfin\Util;
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Controle Financeiro</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown02">
                             <a class="dropdown-item" href="?pg=receitas">Receitas</a>
-                            <a class="dropdown-item" href="?pg=despesas_fixas">Despesas Fixas</a>
+                            <a class="dropdown-item" href="?pg=despesas">Despesas</a>
                             <a class="dropdown-item" href="?pg=despesas_variaveis">Despesas Variáveis</a>
                             <a class="dropdown-item" href="?pg=impostos">Impostos</a>
                             <a class="dropdown-item" href="?pg=transferencias">Transferências</a>

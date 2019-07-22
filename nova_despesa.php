@@ -10,11 +10,11 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
     function goBack() {
         window.history.back();
     }
-    function salvarNovaReceita() {
+    function salvarNovaDespesa() {
         //validaForm();
         var dados = $('#formReceita').serialize();
         $.ajax({
-            url: "ajax/ajax_receita.php?acao=novaReceita",
+            url: "ajax/ajax_despesa.php?acao=novaDespesa",
             type: 'post',
             data: dados,
             success: function (resposta) {
@@ -89,10 +89,10 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
 </script>
 <div class="row">
     <div class="col-md-6 align-middle">
-        <h4 class="align-middle">Cadastrar Nova Receita</h4>
+        <h4 class="align-middle">Cadastrar Nova Despesa</h4>
     </div>
     <div class="col-md-6">
-        <a href="?pg=receitas" class="btn btn-outline-primary btn-sm float-right" role="button" aria-disabled="true">Todas as Receitas</a>
+        <a href="?pg=despesas" class="btn btn-outline-primary btn-sm float-right" role="button" aria-disabled="true">Todas as Despesas</a>
     </div>
 </div>
 <form method="post" id="formReceita">
@@ -151,7 +151,7 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         </div>
     </div>
     <hr>
-    <button type="button" class="btn btn-outline-primary" onclick="salvarNovaReceita();">Salvar</button>
+    <button type="button" class="btn btn-outline-primary" onclick="salvarNovaDespesa();">Salvar</button>
     <button type="reset" class="btn btn-outline-secondary">Limpar</button>
     <input type='button' class="btn btn-outline-warning" value='Voltar' onclick='history.go(-1)' />
 </form>
