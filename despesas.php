@@ -18,66 +18,74 @@ $query->execute();
 $despesa = $query->fetchAll(PDO::FETCH_ASSOC);
 
 use Sisfin\Util;
-?>
-<div class="row">
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Ordem</th>
-                <th scope="col">Valor (R$)</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Recebido de</th>
-                <th scope="col">Categoria</th>
-                <th scope="col">Situação</th>
-                <th scope="col">Data de Cadastro</th>
-                <th scope="col">Ação</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            $ordem = 1;
-            foreach ($despesa as $value) {
-                ?>
-                <tr>
-                    <td><?= $ordem ?></td>
-                    <td class="text-right"><?= number_format($value['valor'], 2, ',', '.') ?></td>
-                    <td><?= $value['descricao'] ?></td>
-                    <td><?= $value['recebido_de'] ?></td>
-                    <td><?= $value['categoria'] ?></td>
-                    <td><?= $value['situacao'] ?></td>
-                    <td><?= Util::FormataBancoData($value['created']) ?></td>
-                    <td>
-                        <a href="#" class="text-primary" title="Editar usuário"><i class="fa fa-user-edit"></i></a>
-                        <a href="#" class="text-danger" title="Excluir usuário"><i class="fa fa-trash-alt"></i></a>
-                        <a href="#" class="text-<?= $text ?>" title="Usuário <?= $descricao ?>"><i class="fa fa-<?= $icon ?>"></i></a>
-                    </td>
-                </tr>
 
+//var_dump($despesa);die;
+if (!empty($despesa)) {
+    ?>
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Ordem</th>
+                    <th scope="col">Valor (R$)</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Recebido de</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Data de Cadastro</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php
-                $valorTotal += $value['valor'];
-                $ordem++;
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
-<div class="row">
-    <div class="col col-md-4">
-        <div class="alert alert-primary">
-            <h3 class="font-weight-normal">Total Receita</h3>
-            <p class="text-center">R$ <?= number_format($valorTotal, 2, ',', '.') ?></p>
+                $ordem = 1;
+                foreach ($despesa as $value) {
+                    ?>
+                    <tr>
+                        <td><?= $ordem ?></td>
+                        <td class="text-right"><?= number_format($value['valor'], 2, ',', '.') ?></td>
+                        <td><?= $value['descricao'] ?></td>
+                        <td><?= $value['recebido_de'] ?></td>
+                        <td><?= $value['categoria'] ?></td>
+                        <td><?= $value['situacao'] ?></td>
+                        <td><?= Util::FormataBancoData($value['created']) ?></td>
+                        <td>
+                            <a href="#" class="text-primary" title="Editar usuário"><i class="fa fa-user-edit"></i></a>
+                            <a href="#" class="text-danger" title="Excluir usuário"><i class="fa fa-trash-alt"></i></a>
+                            <a href="#" class="text-<?= $text ?>" title="Usuário <?= $descricao ?>"><i class="fa fa-<?= $icon ?>"></i></a>
+                        </td>
+                    </tr>
+
+                    <?php
+                    $valorTotal += $value['valor'];
+                    $ordem++;
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col col-md-4">
+            <div class="alert alert-primary">
+                <h3 class="font-weight-normal">Total Receita</h3>
+                <p class="text-center">R$ <?= number_format($valorTotal, 2, ',', '.') ?></p>
+            </div>
+        </div>
+        <div class="col col-md-4">
+            <div class="alert alert-danger">
+                <h3 class="font-weight-normal">Total Despesas</h3>
+                <p class="text-center">R$ <?= number_format($valorTotal, 2, ',', '.') ?></p>
+            </div>
+        </div>
+        <div class="col col-md-4">
+            <div class="alert alert-secondary">
+                <h3 class="font-weight-normal">Total Geral</h3>
+                <p class="text-center">R$ <?= number_format($valorTotal, 2, ',', '.') ?></p>
+            </div>
         </div>
     </div>
-    <div class="col col-md-4">
-        <div class="alert alert-danger">
-            <h3 class="font-weight-normal">Total Despesas</h3>
-            <p class="text-center">R$ <?= number_format($valorTotal, 2, ',', '.') ?></p>
-        </div>
-    </div>
-    <div class="col col-md-4">
-        <div class="alert alert-secondary">
-            <h3 class="font-weight-normal">Total Geral</h3>
-            <p class="text-center">R$ <?= number_format($valorTotal, 2, ',', '.') ?></p>
-        </div>
-    </div>
-</div>
+    <?php
+} else {
+    echo '<p class="text-center">Não existe despesas cadastradas.</p>';
+}
+?>
