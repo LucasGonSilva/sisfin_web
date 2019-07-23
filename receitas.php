@@ -16,7 +16,7 @@ use Sisfin\Util;
         <h1 class="align-middle">Lista de Receitas</h1>
     </div>
     <div class="col-md-6">
-        <a href="?pg=nova_receita" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Nova Receita</a>
+        <a href="?pg=receita_crud" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Nova Receita</a>
     </div>
 </div>
 <div class="row">
@@ -47,9 +47,8 @@ use Sisfin\Util;
                     <td><?= $value['situacao'] ?></td>
                     <td><?= Util::FormataBancoData($value['created']) ?></td>
                     <td>
-                        <a href="#" class="text-primary" title="Editar usuário"><i class="fa fa-user-edit"></i></a>
-                        <a href="#" class="text-danger" title="Excluir usuário"><i class="fa fa-trash-alt"></i></a>
-                        <a href="#" class="text-<?= $text ?>" title="Usuário <?= $descricao ?>"><i class="fa fa-<?= $icon ?>"></i></a>
+                        <a href="?pg=receita_crud&acao=editar&id=<?= $value['id']; ?>" class="text-primary" title="Editar Receita"><i class="fa fa-edit"></i></a>
+                        <a href="#" class="text-danger" title="Excluir Receita"><i class="fa fa-trash-alt"></i></a>
                     </td>
                 </tr>
 

@@ -1,4 +1,10 @@
 <?php
+if ($_GET['acao'] && $_GET['acao'] == 'editar') {
+    $sql = $db->query("SELECT * FROM tb_receita WHERE id = " . $_GET['id']);
+    $resultReceita = $sql->fetchAll(PDO::FETCH_ASSOC);
+    $_POST['id'] = $_GET['id'];
+    $acao = "editar";
+}
 
 use Sisfin\Util;
 
@@ -14,7 +20,7 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         //validaForm();
         var dados = $('#formReceita').serialize();
         $.ajax({
-            url: "ajax/ajax_receita.php?acao=novaReceita",
+            url: "ajax/ajax_receita.php?acao=receita_crud",
             type: 'post',
             data: dados,
             success: function (resposta) {
@@ -96,22 +102,23 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
     </div>
 </div>
 <form method="post" id="formReceita">
+    <input type="hidden" name="id" id="id" value="<?= $resultReceita['id']; ?>">
     <div class="row">
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label for="txtDescricao">Descrição</label>
-                <input type="text" name="txtDescricao" class="form-control required" id="txtDescricao" placeholder="Descrição da Receita" onkeyup="validaForm();">
+                <input type="text" name="txtDescricao" class="form-control required" id="txtDescricao" placeholder="Descrição da Receita" onkeyup="validaForm();" value="<?= $resultReceita[0]['descricao'] ?>">
             </div>
         </div>
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label for="txtRecebidoDe">Recebido de</label>
-                <input type="text" name="txtRecebidoDe" class="form-control required" id="txtRecebidoDe" placeholder="Recebido de" onkeyup="validaForm();">
+                <input type="text" name="txtRecebidoDe" class="form-control required" id="txtRecebidoDe" placeholder="Recebido de" onkeyup="validaForm();" value="<?= $resultReceita[0]['recebido_de'] ?>">
             </div>
         </div>
         <div class="form-group col-md-4">
             <label for="txtValor">Valor (R$)</label>
-            <input type="text" name="txtValor" class="form-control money required" id="txtValor" placeholder="R$ 0,00" maxlength="11" onkeyup="validaForm();">
+            <input type="text" name="txtValor" class="form-control money required" id="txtValor" placeholder="R$ 0,00" maxlength="11" onkeyup="validaForm();" value="<?= number_format($resultReceita[0]['valor'], 2, ',', '.') ?>">
         </div>
     </div>
     <div class="row">
@@ -123,7 +130,7 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
                 $query = $db->query($sqlCategoria);
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($result as $value) {
-                    if ($value['id'] == $resultDespesa[0]['formas_pagamento_id']) {
+                    if ($value['id'] == $resultReceita[0]['id_categoria']) {
                         echo "<option selected value=\"{$value["id"]}\">{$value["descricao"]}</option>";
                     } else {
                         echo "<option value=\"{$value["id"]}\">{$value["descricao"]}</option>";
@@ -140,7 +147,7 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
                 $query = $db->query($sqlSituacao);
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($result as $value) {
-                    if ($value['id'] == $resultDespesa[0]['formas_pagamento_id']) {
+                    if ($value['id'] == $resultReceita[0]['id_situacao']) {
                         echo "<option selected value=\"{$value["id"]}\">{$value["descricao"]}</option>";
                     } else {
                         echo "<option value=\"{$value["id"]}\">{$value["descricao"]}</option>";

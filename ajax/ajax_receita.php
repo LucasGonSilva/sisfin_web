@@ -8,7 +8,7 @@ include '../util/Util.php';
 use Sisfin\Util;
 
 switch ($_GET['acao']) {
-    case 'novaReceita':
+    case 'receita_crud':
         try {
             //Salva no banco
             Util::converteMoedaBanco($_POST['txtValor']);
