@@ -13,7 +13,7 @@ switch ($_GET['acao']) {
             //Salva no banco
             Util::converteMoedaBanco($_POST['txtValor']);
             $date = date("Y-m-d");
-            if (empty($_POST['hdnID'])) {
+            if (empty($_POST['id'])) {
                 $sql = "INSERT INTO tb_receita(
                                     descricao,
                                     recebido_de,
@@ -30,15 +30,16 @@ switch ($_GET['acao']) {
             } else {
                 $acao = $_GET['acao'];
                 $sql = "UPDATE tb_receita SET
-                                        descricao =  '{$_POST['txtNome']}',
-                                        recebido_de =  '{$cpf}',
-                                        valor =  '{$_POST['txtEmail']}',
-                                        id_categoria = {$_POST['cmbPerfil']},
-                                        id_situacao = {$_POST['cmbPerfil']},
+                                        descricao =  '{$_POST['txtDescricao']}',
+                                        recebido_de =  '{$_POST['txtRecebidoDe']}',
+                                        valor =  '{$_POST['txtValor']}',
+                                        id_categoria = {$_POST['cmbCategoria']},
+                                        id_situacao = {$_POST['cmbSituacao']},
                                         modified = '$date'
-                                        WHERE id = {$_POST['hdnID']}";
+                                        WHERE id = {$_POST['id']}";
             }
             $execute = $db->prepare($sql);
+
             if (isset($_GET['acao']) && $_GET['acao'] == 'editar') {
                 if ($execute->execute()) {
                     echo '<br/><div class="alert alert-success" role="alert"><b>Usuário atualizado com sucesso!</b><br/><script>window.location="?pg=c_list_usuario";</script></div>';
@@ -54,25 +55,6 @@ switch ($_GET['acao']) {
             }
         } catch (Exception $e) {
             echo '<div class="alert alert-danger" role="alert"><b>Não foi possivel salvar os registros.<br/>Detalhes: ' . $e->getMessage() . '</b></div>';
-        }
-        break;
-    case 'verificaDescricaoSituacao':
-        $descricao = $_POST['descricao'];
-        if ($descricao == '') {
-            $sql = "SELECT count(id) as valor FROM tb_situacao_financeira WHERE descricao = '$descricao';";
-            $query = $db->query($sql);
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $sql = "SELECT count(id) as valor FROM tb_situacao_financeira WHERE descricao LIKE '%$descricao%';";
-            $query = $db->query($sql);
-            $result = $query->fetchAll(PDO::FETCH_ASSOC);
-        }
-        if ($result[0]['valor'] == '0') {
-            echo 'is-valid';
-        } elseif ($result[0]['valor'] != '0') {
-            echo 'is-invalid';
-        } else {
-            echo 'teste';
         }
         break;
     default:

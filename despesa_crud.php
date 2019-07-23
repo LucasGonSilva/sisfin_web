@@ -1,4 +1,10 @@
 <?php
+if ($_GET['acao'] && $_GET['acao'] == 'editar') {
+    $sql = $db->query("SELECT * FROM tb_despesa WHERE id = " . $_GET['id']);
+    $resultDespesa = $sql->fetchAll(PDO::FETCH_ASSOC);
+    $_POST['id'] = $_GET['id'];
+    $acao = "editar";
+}
 
 use Sisfin\Util;
 
@@ -11,10 +17,9 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         window.history.back();
     }
     function salvarNovaDespesa() {
-        //validaForm();
         var dados = $('#formReceita').serialize();
         $.ajax({
-            url: "ajax/ajax_despesa.php?acao=novaDespesa",
+            url: "ajax/ajax_despesa.php?acao=despesa_crud",
             type: 'post',
             data: dados,
             success: function (resposta) {
@@ -26,66 +31,35 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
             }
         });
     }
-
-//    function validaForm() {
-//        $("#formReceita").click(function () {
-//            event.preventDefault();
-//            var dados = $(this).serialize();
-//            var campos = $(this).find('.required');
-//
-//            $(campos).each(function () {
-//                for (i = 0; i = $(this).val() == ''; i++) {
-//                    if ($(this).val() == '') {
-//                        alert("Preencha os campos obrigatórios");
-//                        $(this).focus();
-//                        e.preventDefault();
-//                    } else {
-//                        $.ajax({
-//                            type: "POST",
-//                            url: "cadastrar.php",
-//                            data: dados,
-//                            success: function (data)
-//                            {
-//                                $("#status").slideDown();
-//                                $("#status").html(data);
-//                            }
-//                        });
-//                        $('#contact-form').trigger("reset");
-//
-//                    }
-//                }
-//            });
-//        });
-//    }
-//    function validaForm() {
-//        $('#txtDescricao').removeClass('is-invalid');
-//        $('#txtRecebidoDe').removeClass('is-invalid');
-//        $('#txtValor').removeClass('is-invalid');
-//        $('#cmbCategoria').removeClass('is-invalid');
-//        $('#cmbSituacao').removeClass('is-invalid');
-//        if ($('#txtDescricao').val() === '') {
-//            $('#txtDescricao').addClass('is-invalid');
-//            return false;
-//        }
-//        if ($('#txtRecebidoDe').val() === '') {
-//            $('#txtRecebidoDe').addClass('is-invalid');
-//            return false;
-//        }
-//        if ($('#txtValor').val() === '') {
-//            $('#txtValor').addClass('is-invalid');
-//            return false;
-//        }
-//        if ($('#cmbCategoria').val() === '') {
-//            $('#cmbCategoria').addClass('is-invalid');
-//            return false;
-//        }
-//        if ($('#cmbSituacao').val() === '') {
-//            $('#cmbSituacao').addClass('is-invalid');
-//            return false;
-//        }
-//        return false;
-//    }
-
+    function validaForm() {
+        if ($('#txtDescricao').val() === '') {
+            alert("Campo Descrição obrigatório.")
+            $('#txtDescricao').focus();
+            return false;
+        }
+        if ($('#txtPagoA').val() === '') {
+            alert("Campo Pago a obrigatório.")
+            $('#txtPagoA').focus();
+            return false;
+        }
+        if ($('#txtValor').val() === '' || $('#txtValor').val() === '0,00') {
+            alert("Campo Valor obrigatório.");
+            $('#txtValor').val('');
+            $('#txtValor').focus();
+            return false;
+        }
+        if ($('#cmbCategoria').val() === '') {
+            alert("Campo Categoria de obrigatório.")
+            $('#cmbCategoria').focus();
+            return false;
+        }
+        if ($('#cmbSituacao').val() === '') {
+            alert("Campo Situação obrigatório.")
+            $('#cmbSituacao').focus();
+            return false;
+        }
+        salvarNovaDespesa();
+    }
 </script>
 <div class="row">
     <div class="col-md-6 align-middle">
@@ -100,30 +74,30 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label for="txtDescricao">Descrição</label>
-                <input type="text" name="txtDescricao" class="form-control required" id="txtDescricao" placeholder="Descrição da Receita" onkeyup="validaForm();">
+                <input type="text" name="txtDescricao" class="form-control required" id="txtDescricao" placeholder="Descrição da Receita" value="<?= $resultDespesa['descricao'] ?>">
             </div>
         </div>
         <div class="form-group col-md-4">
             <div class="form-group">
-                <label for="txtRecebidoDe">Recebido de</label>
-                <input type="text" name="txtRecebidoDe" class="form-control required" id="txtRecebidoDe" placeholder="Recebido de" onkeyup="validaForm();">
+                <label for="txtPagoA">Pago a</label>
+                <input type="text" name="txtPagoA" class="form-control required" id="txtPagoA" placeholder="Pago a" value="<?= $resultDespesa['pago_a'] ?>">
             </div>
         </div>
         <div class="form-group col-md-4">
             <label for="txtValor">Valor (R$)</label>
-            <input type="text" name="txtValor" class="form-control money required" id="txtValor" placeholder="R$ 0,00" maxlength="11" onkeyup="validaForm();">
+            <input type="text" name="txtValor" class="form-control money required" id="txtValor" placeholder="R$ 0,00" maxlength="11" value="<?= number_format($resultDespesa[0]['valor'], 2, ',', '.') ?>">
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-4">
             <label for="cmbCategoria">Categoria</label>
-            <select id="cmbCategoria" name="cmbCategoria" class="form-control required" onclick="validaForm();">
+            <select id="cmbCategoria" name="cmbCategoria" class="form-control required">
                 <option value="" selected>Selecione</option>
                 <?php
                 $query = $db->query($sqlCategoria);
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($result as $value) {
-                    if ($value['id'] == $resultDespesa[0]['formas_pagamento_id']) {
+                    if ($value['id'] == $resultDespesa[0]['id_categoria']) {
                         echo "<option selected value=\"{$value["id"]}\">{$value["descricao"]}</option>";
                     } else {
                         echo "<option value=\"{$value["id"]}\">{$value["descricao"]}</option>";
@@ -134,13 +108,13 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         </div>
         <div class="form-group col-md-4">
             <label for="cmbSituacao">Situação</label>
-            <select id="cmbSituacao" name="cmbSituacao" class="form-control required" onclick="validaForm();">
+            <select id="cmbSituacao" name="cmbSituacao" class="form-control required">
                 <option value="" selected>Selecione</option>
                 <?php
                 $query = $db->query($sqlSituacao);
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($result as $value) {
-                    if ($value['id'] == $resultDespesa[0]['formas_pagamento_id']) {
+                    if ($value['id'] == $resultDespesa[0]['id_situacao']) {
                         echo "<option selected value=\"{$value["id"]}\">{$value["descricao"]}</option>";
                     } else {
                         echo "<option value=\"{$value["id"]}\">{$value["descricao"]}</option>";
@@ -151,7 +125,7 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         </div>
     </div>
     <hr>
-    <button type="button" class="btn btn-outline-primary" onclick="salvarNovaDespesa();">Salvar</button>
+    <button type="button" class="btn btn-outline-primary" onclick="validaForm();">Salvar</button>
     <button type="reset" class="btn btn-outline-secondary">Limpar</button>
     <input type='button' class="btn btn-outline-warning" value='Voltar' onclick='history.go(-1)' />
 </form>

@@ -17,7 +17,6 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         window.history.back();
     }
     function salvarNovaReceita() {
-        //validaForm();
         var dados = $('#formReceita').serialize();
         $.ajax({
             url: "ajax/ajax_receita.php?acao=receita_crud",
@@ -32,65 +31,35 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
             }
         });
     }
-
-//    function validaForm() {
-//        $("#formReceita").click(function () {
-//            event.preventDefault();
-//            var dados = $(this).serialize();
-//            var campos = $(this).find('.required');
-//
-//            $(campos).each(function () {
-//                for (i = 0; i = $(this).val() == ''; i++) {
-//                    if ($(this).val() == '') {
-//                        alert("Preencha os campos obrigatórios");
-//                        $(this).focus();
-//                        e.preventDefault();
-//                    } else {
-//                        $.ajax({
-//                            type: "POST",
-//                            url: "cadastrar.php",
-//                            data: dados,
-//                            success: function (data)
-//                            {
-//                                $("#status").slideDown();
-//                                $("#status").html(data);
-//                            }
-//                        });
-//                        $('#contact-form').trigger("reset");
-//
-//                    }
-//                }
-//            });
-//        });
-//    }
-//    function validaForm() {
-//        $('#txtDescricao').removeClass('is-invalid');
-//        $('#txtRecebidoDe').removeClass('is-invalid');
-//        $('#txtValor').removeClass('is-invalid');
-//        $('#cmbCategoria').removeClass('is-invalid');
-//        $('#cmbSituacao').removeClass('is-invalid');
-//        if ($('#txtDescricao').val() === '') {
-//            $('#txtDescricao').addClass('is-invalid');
-//            return false;
-//        }
-//        if ($('#txtRecebidoDe').val() === '') {
-//            $('#txtRecebidoDe').addClass('is-invalid');
-//            return false;
-//        }
-//        if ($('#txtValor').val() === '') {
-//            $('#txtValor').addClass('is-invalid');
-//            return false;
-//        }
-//        if ($('#cmbCategoria').val() === '') {
-//            $('#cmbCategoria').addClass('is-invalid');
-//            return false;
-//        }
-//        if ($('#cmbSituacao').val() === '') {
-//            $('#cmbSituacao').addClass('is-invalid');
-//            return false;
-//        }
-//        return false;
-//    }
+    function validaForm() {
+        if ($('#txtDescricao').val() === '') {
+            alert("Campo Descrição obrigatório.")
+            $('#txtDescricao').focus();
+            return false;
+        }
+        if ($('#txtRecebidoDe').val() === '') {
+            alert("Campo Recebido de obrigatório.")
+            $('#txtRecebidoDe').focus();
+            return false;
+        }
+        if ($('#txtValor').val() === '' || $('#txtValor').val() === '0,00') {
+            alert("Campo Valor obrigatório.");
+            $('#txtValor').val('');
+            $('#txtValor').focus();
+            return false;
+        }
+        if ($('#cmbCategoria').val() === '') {
+            alert("Campo Categoria de obrigatório.")
+            $('#cmbCategoria').focus();
+            return false;
+        }
+        if ($('#cmbSituacao').val() === '') {
+            alert("Campo Situação obrigatório.")
+            $('#cmbSituacao').focus();
+            return false;
+        }
+        salvarNovaReceita();
+    }
 
 </script>
 <div class="row">
@@ -102,29 +71,29 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
     </div>
 </div>
 <form method="post" id="formReceita">
-    <input type="hidden" name="id" id="id" value="<?= $resultReceita['id']; ?>">
+    <input type="hidden" name="id" id="id" value="<?= $_POST['id']; ?>">
     <div class="row">
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label for="txtDescricao">Descrição</label>
-                <input type="text" name="txtDescricao" class="form-control required" id="txtDescricao" placeholder="Descrição da Receita" onkeyup="validaForm();" value="<?= $resultReceita[0]['descricao'] ?>">
+                <input type="text" name="txtDescricao" class="form-control required" id="txtDescricao" placeholder="Descrição da Receita" value="<?= $resultReceita[0]['descricao'] ?>">
             </div>
         </div>
         <div class="form-group col-md-4">
             <div class="form-group">
                 <label for="txtRecebidoDe">Recebido de</label>
-                <input type="text" name="txtRecebidoDe" class="form-control required" id="txtRecebidoDe" placeholder="Recebido de" onkeyup="validaForm();" value="<?= $resultReceita[0]['recebido_de'] ?>">
+                <input type="text" name="txtRecebidoDe" class="form-control required" id="txtRecebidoDe" placeholder="Recebido de" value="<?= $resultReceita[0]['recebido_de'] ?>">
             </div>
         </div>
         <div class="form-group col-md-4">
             <label for="txtValor">Valor (R$)</label>
-            <input type="text" name="txtValor" class="form-control money required" id="txtValor" placeholder="R$ 0,00" maxlength="11" onkeyup="validaForm();" value="<?= number_format($resultReceita[0]['valor'], 2, ',', '.') ?>">
+            <input type="text" name="txtValor" class="form-control money required" id="txtValor" placeholder="R$ 0,00" maxlength="11" value="<?= number_format($resultReceita[0]['valor'], 2, ',', '.') ?>">
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-4">
             <label for="cmbCategoria">Categoria</label>
-            <select id="cmbCategoria" name="cmbCategoria" class="form-control required" onclick="validaForm();">
+            <select id="cmbCategoria" name="cmbCategoria" class="form-control required">
                 <option value="" selected>Selecione</option>
                 <?php
                 $query = $db->query($sqlCategoria);
@@ -141,7 +110,7 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         </div>
         <div class="form-group col-md-4">
             <label for="cmbSituacao">Situação</label>
-            <select id="cmbSituacao" name="cmbSituacao" class="form-control required" onclick="validaForm();">
+            <select id="cmbSituacao" name="cmbSituacao" class="form-control required">
                 <option value="" selected>Selecione</option>
                 <?php
                 $query = $db->query($sqlSituacao);
@@ -158,7 +127,7 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
         </div>
     </div>
     <hr>
-    <button type="button" class="btn btn-outline-primary" onclick="salvarNovaReceita();">Salvar</button>
+    <button type="button" class="btn btn-outline-primary" onclick="validaForm();">Salvar</button>
     <button type="reset" class="btn btn-outline-secondary">Limpar</button>
     <input type='button' class="btn btn-outline-warning" value='Voltar' onclick='history.go(-1)' />
 </form>

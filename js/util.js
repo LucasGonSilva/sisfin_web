@@ -30,17 +30,17 @@ $(document).ready(function () {
     $('.money').maskMoney({thousands: '.', decimal: ',', allowZero: true});
     $('.inteiro').maskMoney({thousands: '.', decimal: ',', allowZero: true, precision: 0});
 
-    $('.date-full').datepicker({
-        format: "dd/mm/yyyy",
-        autoclose: true,
-        language: 'pt-BR'
-    });
+//    $('.date-full').datepicker({
+//        format: "dd/mm/yyyy",
+//        autoclose: true,
+//        language: 'pt-BR'
+//    });
 
-    $('.date-small').datepicker({
-        format: "mm/yyyy",
-        viewMode: "months",
-        minViewMode: "months",
-        autoclose: true,
-        language: 'pt-BR'
-    });
+//    $('.date-small').datepicker({
+//        format: "mm/yyyy",
+//        viewMode: "months",
+//        minViewMode: "months",
+//        autoclose: true,
+//        language: 'pt-BR'
+//    });
 });

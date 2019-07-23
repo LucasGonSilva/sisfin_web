@@ -8,7 +8,7 @@ use Sisfin\Util;
         $.ajax({
             type: 'POST',
             dataType: 'html',
-            url: 'ajax/ajax_controle_financeiro.php?acao=verificaDescricaoCategoria',
+            url: 'ajax/ajax_controle_financeiro.php?acao=verificaDescricaoFormaPagamento',
             data: {
                 descricao: descricao
             },
@@ -39,10 +39,10 @@ use Sisfin\Util;
 </script>
 <div class="row">
     <div class="col-md-6 align-middle">
-        <h1 class="align-middle">Nova Categoria Financeira</h1>
+        <h1 class="align-middle">Nova Forma de Pagamento</h1>
     </div>
     <div class="col-md-6">
-        <a href="?pg=perfil_usuarios" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Lista de Perfil</a>
+        <a href="?pg=forma_pagamento" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Lista de Formas de Pagamento</a>
     </div>
 </div>
 <form method="POST" enctype="multipart/form-data" class="form-group">
@@ -59,7 +59,7 @@ use Sisfin\Util;
         <div class="col col-lg-6">
             <div class="form-group">
                 <label for="txtCreated">Data de Criação</label>
-                <input class="form-control input-input-lg" type="text" name="txtCreated" required="required" id="txtCreated" value="<?= Util::FormataBancoData(date("Y-m-d")) ?>">
+                <input class="form-control input-input-lg" disabled="" type="text" name="txtCreated" required="required" id="txtCreated" value="<?= Util::FormataBancoData(date("Y-m-d")) ?>">
             </div>
         </div>
     </div>
@@ -78,8 +78,8 @@ use Sisfin\Util;
     <?php
     try {
         //Salva no banco
-        $dt_created = Util::FormataDataBanco($_POST['txtCreated']);
-        $sql = "INSERT INTO tb_categoria_financeira(
+        $dt_created = date("Y-m-d");
+        $sql = "INSERT INTO tb_forma_pagamento(
                                     descricao,
                                     created
                                 )
@@ -88,7 +88,7 @@ use Sisfin\Util;
         $insert = $db->prepare($sql);
         $insert->execute();
 
-        echo "<br/><div class='alert alert-success' role='alert'><b>Registro salvo com sucesso!</b><br /><script>window.location='?pg=categoria_financeira';</script></div>";
+        echo "<br/><div class='alert alert-success' role='alert'><b>Registro salvo com sucesso!</b><br /><script>window.location='?pg=forma_pagamento';</script></div>";
     } catch (Exception $e) {
         echo '<div class="alert alert-danger" role="alert"><b>Não foi possível salvar os registros.<br/>Detalhes: ' . $e->getMessage() . '</b></div>';
     }

@@ -1,9 +1,9 @@
 <div class="row">
-    <div class="col-md-6 align-middle">
-        <h1 class="align-middle">Lista de Despesas</h1>
+    <div class="col-md-6">
+        <h3>Lista de Despesas</h3>
     </div>
     <div class="col-md-6">
-        <a href="?pg=nova_despesa" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Nova Despesa</a>
+        <a href="?pg=despesa_crud" class="btn btn-outline-primary btn-sm float-right" role="button" aria-disabled="true"><i class="fa fa-plus"></i> Nova Despesa</a>
     </div>
 </div>
 <?php
@@ -86,6 +86,6 @@ if (!empty($despesa)) {
     </div>
     <?php
 } else {
-    echo '<p class="text-center">Não existe despesas cadastradas.</p>';
+    echo '<p class="text-center">Não existe dados lançados.</p>';
 }
 ?>

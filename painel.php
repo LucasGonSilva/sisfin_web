@@ -24,29 +24,9 @@ use Sisfin\Util;
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/fontawesome/css/all.css" rel="stylesheet"> <!--load all styles -->
         <script defer src="css/fontawesome/js/all.js"></script> <!--load all styles -->
-        <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.3.mim.js"></script>
         <script type="text/javascript" src="js/jquery.maskMoney.js"></script>
         <script type="text/javascript" src="js/util.js"></script>
-        <script>
-            $(document).ready(function () {
-                pluginDataTable();
-            });
-
-            function pluginDataTable() {
-                $('.buscar').DataTable({
-                    paging: false,
-                    language: {
-                        processing: "Processando...",
-                        search: "Buscar:"
-                    },
-                    columnDefs: [
-                        {
-                            "searchable": false
-                        }
-                    ]
-                }).order([[1, 'desc']]).draw();
-            }
-        </script>
         <style>
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -90,6 +70,7 @@ use Sisfin\Util;
                             <a class="dropdown-item" href="?pg=prioridade">Situação da Tarefa</a>
                             <a class="dropdown-item" href="?pg=categoria_financeira">Categoria Financeira</a>
                             <a class="dropdown-item" href="?pg=situacao_financeira">Situação Financeiro</a>
+                            <a class="dropdown-item" href="?pg=forma_pagamento">Forma de Pagamento</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
