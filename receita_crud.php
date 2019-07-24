@@ -10,6 +10,7 @@ use Sisfin\Util;
 
 $sqlCategoria = 'SELECT * FROM tb_categoria_financeira';
 $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
+$sqlFormaRecebimento = 'SELECT * FROM tb_forma_pagamento';
 ?>
 
 <script>
@@ -117,6 +118,23 @@ $sqlSituacao = 'SELECT * FROM tb_situacao_financeira';
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($result as $value) {
                     if ($value['id'] == $resultReceita[0]['id_situacao']) {
+                        echo "<option selected value=\"{$value["id"]}\">{$value["descricao"]}</option>";
+                    } else {
+                        echo "<option value=\"{$value["id"]}\">{$value["descricao"]}</option>";
+                    }
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="cmbForma">Forma de Recebimento</label>
+            <select id="cmbForma" name="cmbForma" class="form-control required">
+                <option value="" selected>Selecione</option>
+                <?php
+                $query = $db->query($sqlFormaRecebimento);
+                $result = $query->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($result as $value) {
+                    if ($value['id'] == $resultReceita[0]['id_forma_recebimento']) {
                         echo "<option selected value=\"{$value["id"]}\">{$value["descricao"]}</option>";
                     } else {
                         echo "<option value=\"{$value["id"]}\">{$value["descricao"]}</option>";
