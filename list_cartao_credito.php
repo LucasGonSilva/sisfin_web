@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6 align-middle">
-        <h4 class="align-middle">Lista de Badeiras de Cartões</h4>
+        <h4 class="align-middle">Lista de Cartão de Crédito</h4>
     </div>
     <div class="col-md-6">
         <a href="?pg=bandeira_cartao_crud" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Adicionar Nova</a>
@@ -22,7 +22,8 @@ if (!empty($bandeira)) {
                 <tr>
                     <th scope="col">Ordem</th>
                     <th scope="col">Descrição</th>
-                    <th scope="col" class="text-center">Imagem</th>
+                    <th scope="col">Banco</th>
+                    <th scope="col" class="text-center">Bandeira</th>
                     <th scope="col">Status</th>
                     <th scope="col">Criação</th>
                     <th scope="col">Ação</th>

@@ -72,6 +72,7 @@ use Sisfin\Util;
                             <a class="dropdown-item" href="?pg=list_situacao_financeira">Situação Financeiro</a>
                             <a class="dropdown-item" href="?pg=list_forma_pagamento">Forma de Pagamento</a>
                             <a class="dropdown-item" href="?pg=list_bandeira_cartao">Bandeiras de Cartão</a>
+                            <a class="dropdown-item" href="?pg=list_cartao_credito">Cartão de Crédito</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">

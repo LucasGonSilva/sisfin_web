@@ -121,7 +121,7 @@ use Sisfin\Util;
         $insert->execute();
 
 
-        echo '<br/><div class="alert alert-success" role="alert"><b>Registro salvo com sucesso</b><br /><a href="?pg = c_lanca_despesas">Listar Despesas</a></div>';
+        echo '<br/><div class="alert alert-success" role="alert"><b>Registro salvo com sucesso!</b><br /><script>window.location.href="?pg=list_bandeira_cartao";</script></div>';
     } catch (Exception $e) {
         echo '<div class="alert alert-danger" role="alert"><b>NÃ£o foi possivel salvar os registros.<br/>Detalhes: ' . $e->getMessage() . '</b></div>';
     }
