@@ -60,27 +60,28 @@ use Sisfin\Util;
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="?pg=tarefas">Tarefas</a>
-                            <a class="dropdown-item" href="?pg=projetos">Projetos</a>
-                            <a class="dropdown-item" href="?pg=usuarios">Usuários</a>
-                            <a class="dropdown-item" href="?pg=perfil_usuarios">Perfil de Usuário</a>
-                            <a class="dropdown-item" href="?pg=status_usuarios">Status de Usuário</a>
-                            <a class="dropdown-item" href="?pg=prioridades">Prioridade de Tarefas</a>
-                            <a class="dropdown-item" href="?pg=prioridade">Status da Tarefa</a>
-                            <a class="dropdown-item" href="?pg=prioridade">Situação da Tarefa</a>
-                            <a class="dropdown-item" href="?pg=categoria_financeira">Categoria Financeira</a>
-                            <a class="dropdown-item" href="?pg=situacao_financeira">Situação Financeiro</a>
-                            <a class="dropdown-item" href="?pg=forma_pagamento">Forma de Pagamento</a>
+                            <a class="dropdown-item" href="?pg=list_tarefas">Tarefas</a>
+                            <a class="dropdown-item" href="?pg=list_projetos">Projetos</a>
+                            <a class="dropdown-item" href="?pg=list_usuarios">Usuários</a>
+                            <a class="dropdown-item" href="?pg=list_perfil_usuarios">Perfil de Usuário</a>
+                            <a class="dropdown-item" href="?pg=list_status_usuarios">Status de Usuário</a>
+                            <a class="dropdown-item" href="?pg=list_prioridades">Prioridade de Tarefas</a>
+                            <a class="dropdown-item" href="?pg=list_prioridade">Status da Tarefa</a>
+                            <a class="dropdown-item" href="?pg=list_prioridade">Situação da Tarefa</a>
+                            <a class="dropdown-item" href="?pg=list_categoria_financeira">Categoria Financeira</a>
+                            <a class="dropdown-item" href="?pg=list_situacao_financeira">Situação Financeiro</a>
+                            <a class="dropdown-item" href="?pg=list_forma_pagamento">Forma de Pagamento</a>
+                            <a class="dropdown-item" href="?pg=list_bandeira_cartao">Bandeiras de Cartão</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Controle Financeiro</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown02">
-                            <a class="dropdown-item" href="?pg=receitas">Receitas</a>
-                            <a class="dropdown-item" href="?pg=despesas">Despesas</a>
-                            <a class="dropdown-item" href="?pg=despesas_variaveis">Despesas Variáveis</a>
-                            <a class="dropdown-item" href="?pg=impostos">Impostos</a>
-                            <a class="dropdown-item" href="?pg=transferencias">Transferências</a>
+                            <a class="dropdown-item" href="?pg=list_receitas">Receitas</a>
+                            <a class="dropdown-item" href="?pg=list_despesas">Despesas</a>
+                            <a class="dropdown-item" href="?pg=list_despesas_variaveis">Despesas Variáveis</a>
+                            <a class="dropdown-item" href="?pg=list_impostos">Impostos</a>
+                            <a class="dropdown-item" href="?pg=list_transferencias">Transferências</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
