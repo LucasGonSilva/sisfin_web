@@ -12,6 +12,9 @@ if ($_GET['acao'] && $_GET['acao'] == 'editar') {
 use Sisfin\Util;
 ?>
 <script>
+    function goBack() {
+        window.history.back();
+    }
     function verificaDescricao() {
         var descricao = $('#txtDescricao').val();
         $.ajax({
@@ -81,13 +84,19 @@ use Sisfin\Util;
     try {
         //Salva no banco
         $date = date('Y-m-d');
-        $sql = "INSERT INTO tb_regioes(
-                                    descricao,
-                                    created
-                                )
-                                  VALUES (
-                                            '{$_POST['txtDescricao']}',
-                                            '{$date}')";
+        if (empty($_POST['id'])) {
+            $sql = "INSERT INTO tb_regioes(
+                        descricao,
+                        created
+                    ) VALUES (
+                        '{$_POST['txtDescricao']}',
+                        '{$date}')";
+        } else {
+            $sql = "UPDATE tb_regioes SET
+                        descricao = '{$_POST['txtDescricao']}', 
+                        modified = '{$date}'
+                    WHERE id = {$_POST['id']}";
+        }
         $insert = $db->prepare($sql);
         $insert->execute();
 

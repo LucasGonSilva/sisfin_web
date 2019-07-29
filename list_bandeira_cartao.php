@@ -40,11 +40,10 @@ if (!empty($bandeira)) {
                         <td><?= $status = $value['status'] == '1' ? 'Ativo' : 'Inativo'; ?></td>
                         <td><?= Util::FormataBancoData($value['created']) ?></td>
                         <td>
-                            <a href="?pg=edita_bandeira_cartao&id=<?= $value['id'] ?>" class="text-dark" title="Editar Bandeira"><i class="fa fa-edit"></i></a>
+                            <a href="?pg=bandeira_cartao_crud&acao=editar&id=<?= $value['id'] ?>" class="text-dark" title="Editar Bandeira"><i class="fa fa-edit"></i></a>
                             <a class="excluir" href="<?php echo $value['id'] ?>"><i class="fa fa-trash" style="color: red"></i></a>
                         </td>
                     </tr>
-
                     <?php
                     $ordem++;
                 }

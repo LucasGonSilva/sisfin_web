@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-6 align-middle">
-        <h4 class="align-middle">Estado / Capital</h4>
+        <h4 class="align-middle">Estado / Capital / Região</h4>
     </div>
     <div class="col-md-6">
         <a href="?pg=estado_capital_crud" class="btn btn-primary btn-sm float-right" role="button" aria-disabled="true">Adicionar Novo</a>
@@ -10,7 +10,7 @@
 $sql = "SELECT ec.*, r.descricao AS regiao FROM sisfin_web.tb_estado_capital ec
         LEFT JOIN tb_regioes r
         ON ec.id_regiao = r.id
-        ORDER BY ec.estado";
+        ORDER BY r.descricao";
 $query = $db->prepare($sql);
 $query->execute();
 $estado_capital = $query->fetchAll(PDO::FETCH_ASSOC);

@@ -9,9 +9,13 @@ if ($_GET['acao'] && $_GET['acao'] == 'editar') {
     $btn = 'Salvar';
 }
 $sqlRegiao = "SELECT * FROM tb_regioes ORDER BY descricao";
+
 use Sisfin\Util;
 ?>
 <script>
+    function goBack() {
+        window.history.back();
+    }
     function verificaDescricao() {
         var descricao = $('#txtDescricao').val();
         $.ajax({
@@ -103,11 +107,10 @@ use Sisfin\Util;
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 center-block">
-            <input type="submit" value="<?= $btn ?>" class="btn btn-primary center-block"> 
-        </div>
-    </div>
+    <hr>
+    <button type="submit" class="btn btn-outline-primary"><?= $btn ?></button>
+    <button type="reset" class="btn btn-outline-secondary">Limpar</button>
+    <input type='button' class="btn btn-outline-warning" value='Voltar' onclick='history.go(-1)' />
 </form>
 <?php if (($_SERVER['REQUEST_METHOD'] == 'POST')) { ?>
     <script>
@@ -115,22 +118,35 @@ use Sisfin\Util;
         $('#txtEstado').val("<?= $_POST['txtEstado'] ?>");
         $('#txtCapital').val("<?= $_POST['txtCapital'] ?>");
         $('#txtUF').val("<?= $_POST['txtUF'] ?>");
+        $('#cmbRegiao').val("<?= $_POST['cmbRegiao'] ?>");
     </script>
     <?php
     try {
-        //Salva no banco
+//Salva no banco
         $date = date('Y-m-d');
-        $sql = "INSERT INTO tb_estado_capital(
+        if (empty($_POST['id'])) {
+            $sql = "INSERT INTO tb_estado_capital(
                                     estado,
                                     capital,
                                     uf,
+                                    id_regiao,
                                     created
                                 )
                                   VALUES (
                                             '{$_POST['txtEstado']}',
                                             '{$_POST['txtCapital']}',
                                             '{$_POST['txtUF']}',
+                                            '{$_POST['cmbRegiao']}',
                                             '{$date}')";
+        } else {
+            $sql = "UPDATE tb_estado_capital SET
+                                        estado = '{$_POST['txtEstado']}', 
+                                        capital = '{$_POST['txtCapital']}',
+                                        uf = '{$_POST['txtUF']}',
+                                        id_regiao = '{$_POST['cmbRegiao']}',
+                                        modified = '{$date}'
+                                WHERE id = {$_POST['id']}";
+        }
         $insert = $db->prepare($sql);
         $insert->execute();
 
