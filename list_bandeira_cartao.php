@@ -24,7 +24,7 @@ if (!empty($bandeira)) {
                     <th scope="col">Descrição</th>
                     <th scope="col" class="text-center">Imagem</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Criação</th>
+                    <th scope="col">Criação/Modificado</th>
                     <th scope="col">Ação</th>
                 </tr>
             </thead>
